@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="php_nojika" overwriteAll="false" preserveTimestamps="false">
+    <serverData>
+      <paths name="php_nojika">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/php_nojika" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
