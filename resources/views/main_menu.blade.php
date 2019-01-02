@@ -7,8 +7,6 @@
         });
     });
 </script>
-<br>
-<br>
 <div class="head_test-wrap">
     <h1 class="head_test">
         MENU

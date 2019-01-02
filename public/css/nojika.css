@@ -10,7 +10,11 @@
     height: 480px;
 
     border: 1px solid black;
-    background-color: chocolate;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff7400+0,ff7400+100&0.45+23,1+100 */
+    background: -moz-linear-gradient(45deg, rgba(255,116,0,0.45) 0%, rgba(255,116,0,0.45) 23%, rgba(255,116,0,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, rgba(255,116,0,0.45) 0%,rgba(255,116,0,0.45) 23%,rgba(255,116,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, rgba(255,116,0,0.45) 0%,rgba(255,116,0,0.45) 23%,rgba(255,116,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73ff7400', endColorstr='#ff7400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .inline_square {
