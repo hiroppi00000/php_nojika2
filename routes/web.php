@@ -25,4 +25,5 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/main_menu', function(){ return view('main_menu');});
 	Route::get('/new_create', 'NojikaController@new_create');
+	Route::post('/regist_item', 'NojikaController@regist_item');
 });
