@@ -76,7 +76,7 @@
 <br>
 中カテゴリー：<br>
 @foreach($middle_item_categories as $middle_category)
-<select name="middle_item_category" size="@if(1 == count($middle_category)) 2 @else {{count($middle_category)}} @endif" id="middle_item_category_{{$loop->iteration}}">
+<select name="middle_item_category_{{$loop->iteration}}" size="@if(1 == count($middle_category)) 2 @else {{count($middle_category)}} @endif" id="middle_item_category_{{$loop->iteration}}">
     @foreach($middle_category as $m_category)
         <option value="{{$m_category->id}}" onclick="setMiddleCategory({{$m_category->id}})">{{$m_category->name}}</option>
     @endforeach
