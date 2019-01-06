@@ -23,4 +23,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/new_create', 'NojikaController@new_create');
 	Route::post('/regist_item', 'NojikaController@regist_item');
 	Route::get('/check', 'NojikaController@check');
+	Route::get('/from_to_check', function(){ return view('nojika/from_to_check');});
+	Route::post('/from_to_check', 'NojikaController@from_to_check');
 });

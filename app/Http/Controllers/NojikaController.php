@@ -68,8 +68,9 @@ class NojikaController extends Controller
 
     public function check(Request $request)
     {
+        Carbon::setWeekStartsAt(Carbon::SUNDAY);
         $dt = Carbon::today();
-        $dt = $dt->startOfWeek()->subDay(1);
+        $dt = $dt->startOfWeek();
 
         $result = ['each' => [], 'each_total' => []];
         for($i = 1 ;$i <= 7; $i++)
@@ -87,7 +88,6 @@ class NojikaController extends Controller
         }
 
         $dt2 = Carbon::today();
-        $dt2 = $dt2->startOfWeek()->subDay(1);
         $sunday = $dt2->toDateString();
         $saturday = $dt2->addDay(6)->toDateString();
 
@@ -120,6 +120,67 @@ class NojikaController extends Controller
             'result' => $result,
             'big_category_array' => $big_category_array,
             'week_total_price' => $week_total_price
+        ]);
+    }
+
+    public function from_to_check(Request $request)
+    {
+        $to = strtotime($request->post('to'));
+        $dt_current = Carbon::parse($request->post('from'));
+        $current = strtotime($dt_current->toDateString());
+        $result = ['each' => [], 'each_total' => []];
+        while($current <= $to)
+        {
+            $result['each'][$dt_current->toDateString()] =
+                DB::table('items')->select([
+                    'items.id',
+                    'items.middle_category_id',
+                    'items.location',
+                    'items.note',
+                    'items.price',
+                    'items.name as iname',
+                    'big_item_categories.name',
+                    'big_item_categories.id as bid'
+                ])->leftjoin('middle_item_categories', 'items.middle_category_id', '=', 'middle_item_categories.id')
+                    ->leftjoin('big_item_categories', 'middle_item_categories.big_category_id', '=', 'big_item_categories.id')
+                    ->where('item_date', $dt_current->toDateString())
+                    ->get();
+            $dt_current = $dt_current->addDay(1);
+            $current = strtotime($dt_current->toDateString());
+        }
+
+        foreach($result['each'] as $day_key => $items)
+        {
+            $total = 0;
+            foreach($items as $item)
+            {
+                $total += $item->price;
+            }
+            $result['each_total'][$day_key] = $total;
+        }
+
+        $big_category = Big_item_category::all();
+        $big_category_array = [];
+        foreach($big_category as $big)
+        {
+            $big_category_array[$big->id] = ['name' => $big->name, 'total_price' => 0];
+        }
+
+        $range_total_price = 0;
+        foreach($result['each'] as $day_key => $items)
+        {
+            foreach($items as $item)
+            {
+                $big_category_array[$item->bid]['total_price'] += $item->price;
+                $range_total_price += $item->price;
+            }
+        }
+
+        return view('nojika/from_to_check', [
+            'result' => $result,
+            'big_category_array' => $big_category_array,
+            'range_total_price' => $range_total_price,
+            'request' => $request
         ]);
     }
 }
